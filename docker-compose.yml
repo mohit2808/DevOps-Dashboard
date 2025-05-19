@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0                            # MySQL version 8.0
+    container_name: devops_mysql                 # Name of the container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass              # Root password
+      MYSQL_DATABASE: devops_dashboard           # Database name
+      MYSQL_USER: devops_user                    # MySQL user
+      MYSQL_PASSWORD: devops_pass                # MySQL password
+    ports:
+      - "3307:3306"                              # Exposing MySQL port
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - devops-net
+
+networks:
+  devops-net:
+    driver: bridge
+
