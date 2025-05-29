@@ -21,7 +21,7 @@ public class JenkinsPollingService {
 
     @Scheduled(fixedRate = 60000) // every 60 seconds
     public void pollJenkinsJob() {
-        String jobName = "YourJenkinsJobName";
+        String jobName = "GithubWebhook";
         JsonNode buildInfo = jenkinsClientService.fetchJobDetails(jobName);
 
         if (buildInfo != null) {
