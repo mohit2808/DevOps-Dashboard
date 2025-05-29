@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -28,9 +28,24 @@ public class DeploymentMetrics {
     @Column(name = "status")
     private String status;
 
-    @Setter
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+
+    @Column(name = "code_commit_time")
+    private LocalDateTime codeCommitTime;
+
+    @Column(name = "deployment_time")
+    private LocalDateTime deploymentTime;
+
+    @Transient
+    private Long leadTimeMinutes;
+
+    public Long getLeadTimeMinutes() {
+        if (codeCommitTime != null && deploymentTime != null) {
+            return java.time.Duration.between(codeCommitTime, deploymentTime).toMinutes();
+        }
+        return null;
+    }
 
 }
 
